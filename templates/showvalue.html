@@ -1,40 +1,83 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Login Page</title>
-    <h1>Welcome : {{full_name}}  </h1>
-  </head>
-  <body>
-   </html>
-
-
-<div class="topnav">
-  <a class="active" 
-    href="#Payment Request">Payment Request</a>
-  <a href="#UTR">UTR</a>
-  <a href="#Vehicle">Vehicle</a>
-  <a href="#Insurance">Insurance</a>
-</div>
-
-<html>
 <head>
-    <title>Show Value</title>
+    <title>Show Values</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .success-message {
+            color: green;
+        }
+
+        .no-values-message {
+            font-style: italic;
+            color: #999;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .actions button {
+            margin-right: 5px;
+        }
+    </style>
 </head>
 <body>
-    <h1>SQL Query Results</h1>
-    <table>
-        <tr>
-            <th>Column 1</th>
-            <th>Column 2</th>
-            <!-- Add more table headers if necessary -->
-        </tr>
-        {% for row in data %}
-        <tr>
-            <td>{{ row[0] }}</td>
-            <td>{{ row[1] }}</td>
-            <!-- Add more table cells if necessary -->
-        </tr>
-        {% endfor %}
-    </table>
+    <h1>Show Values</h1>
+
+    <a href="/export" class="export-btn">Export to CSV</a>
+
+    {% if message %}
+        <p class="success-message">{{ message }}</p>
+    {% endif %}
+
+    {% if data %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>IP Address</th>
+                    <th>Date/Time</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                    <tr>
+                        <td>{{ row.id }}</td>
+                        <td>{{ row.nm }}</td>
+                        <td>{{ row.ip }}</td>
+                        <td>{{ row.created_at }}</td>
+                        <td class="actions">
+                            <form action="/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this row?');">
+                                <input type="hidden" name="id" value="{{ row.id }}">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="no-values-message">No values found.</p>
+    {% endif %}
+  
+    <p><a href="/home">Back to Home</a></p>
 </body>
 </html>
