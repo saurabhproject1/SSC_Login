@@ -79,25 +79,15 @@
                         <td>{{ row.ip }}</td>
                         <td>{{ row.created_at }}</td>
                       <td>{{ row.status }}</td>
-                      
-                        <td>
-                            {% if row.status == 0 %}
-                                Pending
-                            {% else %}
-                                Approved
-                            {% endif %}
-                        </td>
-                        <td class="actions">
+                          <td class="actions">
                             <form action="/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this row?');">
                                 <input type="hidden" name="id" value="{{ row.id }}">
                                 <button type="submit">Delete</button>
                             </form>
-                            {% if row.status == 0 %}
-                                <form action="/approve" method="POST">
-                                    <input type="hidden" name="id" value="{{ row.id }}">
-                                    <button type="submit">Approve</button>
-                                </form>
-                            {% endif %}
+                            <form action="/approve" method="POST">
+                                <input type="hidden" name="id" value="{{ row.id }}">
+                                <button type="submit">Approve</button>
+                            </form>
                         </td>
                     </tr>
                 {% endfor %}
@@ -107,6 +97,6 @@
         <p class="no-values-message">No values found.</p>
     {% endif %}
   
-    <p><a href="/home">Back to Home</a></p>
+    <p><a href="/home">Home</a></p>
 </body>
 </html>
