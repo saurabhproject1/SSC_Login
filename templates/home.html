@@ -2,6 +2,40 @@
 <html>
 <head>
     <title>Home</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .success-message {
+            color: green;
+        }
+
+        .no-values-message {
+            font-style: italic;
+            color: #999;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .actions button {
+            margin-right: 5px;
+        }
+    </style>
 </head>
 <body>
     <h1>Welcome to the Home Page</h1>
@@ -16,5 +50,63 @@
     {% if full_name %}
     <h2>Thank you for submitting, {{ full_name }}!</h2>
     {% endif %}
+
+    <h1>Show Values</h1>
+
+    <a href="/export" class="export-btn">Export to CSV</a>
+
+    {% if message %}
+        <p class="success-message">{{ message }}</p>
+    {% endif %}
+
+    {% if data %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>IP Address</th>
+                    <th>Date/Time</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                    <tr>
+                        <td>{{ row.id }}</td>
+                        <td>{{ row.nm }}</td>
+                        <td>{{ row.ip }}</td>
+                        <td>{{ row.created_at }}</td>
+                      <td>{{ row.status }}</td>
+                      
+                        <td>
+                            {% if row.status == 0 %}
+                                Pending
+                            {% else %}
+                                Approved
+                            {% endif %}
+                        </td>
+                        <td class="actions">
+                            <form action="/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this row?');">
+                                <input type="hidden" name="id" value="{{ row.id }}">
+                                <button type="submit">Delete</button>
+                            </form>
+                            {% if row.status == 0 %}
+                                <form action="/approve" method="POST">
+                                    <input type="hidden" name="id" value="{{ row.id }}">
+                                    <button type="submit">Approve</button>
+                                </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="no-values-message">No values found.</p>
+    {% endif %}
+  
+    <p><a href="/home">Back to Home</a></p>
 </body>
 </html>
