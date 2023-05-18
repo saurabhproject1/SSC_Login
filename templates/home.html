@@ -36,6 +36,19 @@
             margin-right: 5px;
         }
     </style>
+    <script>
+        function toggleInput(isType) {
+            var selectElement = document.getElementById("Lnm");
+            var otherLnmElement = document.getElementById("otherLnm");
+
+            if (isType) {
+                selectElement.value = "other";
+                otherLnmElement.style.display = "block";
+            } else {
+                otherLnmElement.style.display = "none";
+            }
+        }
+    </script>
 </head>
 <body>
     <h1>Welcome to the Home Page</h1>
@@ -45,22 +58,24 @@
         <input type="text" name="Full_name" id="Full_name">
         <br>
         <label for="Lnm">Last Name:</label>
-        <select name="Lnm" id="Lnm">
+        <select name="Lnm" id="Lnm" onchange="toggleInput(this.value === 'other')">
+            <option value="" selected disabled>Select an option</option>
             {% for value in last_names %}
-            <option value="{{ value }}">{{ value }}</option>
+                <option value="{{ value }}">{{ value }}</option>
             {% endfor %}
+            <option value="other">Other</option>
         </select>
+        <br>
+        <div id="otherLnm" style="display: none;">
+            <label for="otherLnmValue">Or enter Last Name:</label>
+            <input type="text" name="otherLnmValue" id="otherLnmValue">
+        </div>
         <br>
         <input type="submit" value="Submit">
     </form>
     {% if full_name %}
-    <h2>Thank you for submitting, {{ full_name }}!</h2>
+        <h2>Thank you for submitting, {{ full_name }}!</h2>
     {% endif %}
-
-
-
-
-
 
     <h1>Show Values</h1>
 
@@ -76,7 +91,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                  <th>Lnm</th>
+                    <th>Lnm</th>
                     <th>IP Address</th>
                     <th>Date/Time</th>
                     <th>Status</th>
@@ -88,12 +103,12 @@
                     <tr>
                         <td>{{ row.id }}</td>
                         <td>{{ row.nm }}</td>
-                      <td>{{ row.Lnm }}</td>
+                        <td>{{ row.Lnm }}</td>
                         <td>{{ row.ip }}</td>
                         <td>{{ row.created_at }}</td>
-                      <td>{{ row.status }}</td>
-                          <td class="actions">
-                            <form action="/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this row?');">
+                        <td>{{ row.status }}</td>
+                        <td class="actions">
+                            <form action="/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this entry?')">
                                 <input type="hidden" name="id" value="{{ row.id }}">
                                 <button type="submit">Delete</button>
                             </form>
@@ -107,9 +122,7 @@
             </tbody>
         </table>
     {% else %}
-        <p class="no-values-message">No values found.</p>
+        <p class="no-values-message">No values to display.</p>
     {% endif %}
-  
-    <p><a href="/home">Home</a></p>
 </body>
 </html>
