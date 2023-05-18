@@ -3,7 +3,7 @@ from io import StringIO
 from flask import Flask, render_template, request, redirect, Response
 from sqlalchemy import create_engine, text
 
-db_connection_string = "mysql+pymysql://j55z75162mg05cwn14xl:pscale_pw_bOno0XMWIKvKxfXsJu29IQ7XFKt8oYNt60cPgXNWpAy@aws.connect.psdb.cloud/ssc_att?charset=utf8mb4"
+db_connection_string = "mysql+pymysql://mtclbbq14rgbqg4kmn0w:pscale_pw_vm49ycJaPR4t9baizkpsOOWj16RDben3qLu5eRn4XVo@aws.connect.psdb.cloud/ssc_att?charset=utf8mb4"
 engine = create_engine(db_connection_string, connect_args={"ssl": {"ssl_ca": "/etc/ssl/cert.pem"}})
 app = Flask(__name__)
 
@@ -74,7 +74,7 @@ def home():
 
     # Retrieve last names from the database
     with engine.connect() as conn:
-        stmt = text("SELECT Lnm FROM SST_ATT_NEW_TBL_1")
+        stmt = text("SELECT distinct Lnm FROM SST_ATT_NEW_TBL_1")
         result = conn.execute(stmt)
         last_names = [row[0] for row in result]
 
