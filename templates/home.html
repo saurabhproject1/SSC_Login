@@ -43,6 +43,8 @@
     <form action="/home" method="POST">
         <label for="full_name">Full Name:</label>
         <input type="text" id="full_name" name="Full_name" required>
+       <label for="Last_name">Lnm:</label>
+        <input type="text" id="Lnm" name="Lnm" required>
         <br>
         <input type="submit" value="Submit">
     </form>
@@ -65,6 +67,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
+                  <th>Lnm</th>
                     <th>IP Address</th>
                     <th>Date/Time</th>
                     <th>Status</th>
@@ -76,6 +79,7 @@
                     <tr>
                         <td>{{ row.id }}</td>
                         <td>{{ row.nm }}</td>
+                      <td>{{ row.Lnm }}</td>
                         <td>{{ row.ip }}</td>
                         <td>{{ row.created_at }}</td>
                       <td>{{ row.status }}</td>
