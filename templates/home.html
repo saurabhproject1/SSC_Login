@@ -40,18 +40,27 @@
 <body>
     <h1>Welcome to the Home Page</h1>
 
-    <form action="/home" method="POST">
-        <label for="full_name">Full Name:</label>
-        <input type="text" id="full_name" name="Full_name" required>
-       <label for="Last_name">Lnm:</label>
-        <input type="text" id="Lnm" name="Lnm" required>
+    <form method="POST" action="/home">
+        <label for="Full_name">Full Name:</label>
+        <input type="text" name="Full_name" id="Full_name">
+        <br>
+        <label for="Lnm">Last Name:</label>
+        <select name="Lnm" id="Lnm">
+            {% for value in last_names %}
+            <option value="{{ value }}">{{ value }}</option>
+            {% endfor %}
+        </select>
         <br>
         <input type="submit" value="Submit">
     </form>
-
     {% if full_name %}
     <h2>Thank you for submitting, {{ full_name }}!</h2>
     {% endif %}
+
+
+
+
+
 
     <h1>Show Values</h1>
 
