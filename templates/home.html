@@ -40,12 +40,19 @@
         function toggleInput(isType) {
             var selectElement = document.getElementById("Lnm");
             var otherLnmElement = document.getElementById("otherLnm");
+            var customLnmElement = document.getElementById("customLnm");
 
             if (isType) {
                 selectElement.value = "other";
                 otherLnmElement.style.display = "block";
+                customLnmElement.style.display = "none";
+            } else if (selectElement.value === "write") {
+                selectElement.value = "";
+                otherLnmElement.style.display = "none";
+                customLnmElement.style.display = "block";
             } else {
                 otherLnmElement.style.display = "none";
+                customLnmElement.style.display = "none";
             }
         }
     </script>
@@ -58,18 +65,19 @@
         <input type="text" name="Full_name" id="Full_name">
         <br>
         <label for="Lnm">Last Name:</label>
-        <select name="Lnm" id="Lnm" onchange="toggleInput(this.value === 'other')">
-            <option value="" selected disabled>Select an option</option>
+        <input type="text" name="Lnm" id="LnmInput" list="LnmList" placeholder="Select or write a value" onchange="toggleInput(this.value === 'other' || this.value === 'write')">
+        <datalist id="LnmList">
+            <option value="" disabled>Select an option</option>
             {% for value in last_names %}
                 <option value="{{ value }}">{{ value }}</option>
             {% endfor %}
-            <option value="other">Other</option>
-        </select>
+        </datalist>
         <br>
         <div id="otherLnm" style="display: none;">
             <label for="otherLnmValue">Or enter Last Name:</label>
             <input type="text" name="otherLnmValue" id="otherLnmValue">
         </div>
+        <input type="text" name="customLnm" id="customLnm" style="display: none;">
         <br>
         <input type="submit" value="Submit">
     </form>

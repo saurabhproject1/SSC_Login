@@ -3,7 +3,7 @@ from io import StringIO
 from flask import Flask, render_template, request, redirect, Response
 from sqlalchemy import create_engine, text
 
-db_connection_string = "mysql+pymysql://rf7xz332o2sewaacncmk:pscale_pw_CGZ256EZrgQsQ3Ktz9nst9gZMy4nR35SuFqghHilcwk@aws.connect.psdb.cloud/ssc_att?charset=utf8mb4"
+db_connection_string = "mysql+pymysql://79qfoxq03f2k1p737vp2:pscale_pw_RnCgMR2i4F4yiJgzVZLzRLXBN3ewyPkPq3GaH9FPy8E@aws.connect.psdb.cloud/ssc_att?charset=utf8mb4"
 engine = create_engine(db_connection_string, connect_args={"ssl": {"ssl_ca": "/etc/ssl/cert.pem"}})
 app = Flask(__name__)
 
